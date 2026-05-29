@@ -10,6 +10,7 @@ import { Media } from "./collections/Media.ts";
 import { News } from "./collections/News.ts";
 import { ReusableCtas } from "./collections/ReusableCtas.ts";
 import { Users } from "./collections/Users.ts";
+import { migrations } from "./migrations/index.ts";
 
 const SITE_URL = process.env.NEXT_PUBLIC_SERVER_URL || "http://localhost:3000";
 const fallbackDatabaseUri = `file:${join(tmpdir(), "payload.db").replace(/\\/g, "/")}`;
@@ -36,6 +37,7 @@ export default buildConfig({
     client: {
       url: databaseUri,
     },
+    prodMigrations: process.env.VERCEL ? migrations : undefined,
   }),
   secret: process.env.PAYLOAD_SECRET || "gobe-local-payload-secret-change-before-production",
   sharp,
