@@ -1,8 +1,10 @@
 "use client";
 
 import { useEffect } from "react";
+import { GobeModel } from "./GobeModel";
 import { CustomCursor } from "./CustomCursor";
 import { GlobeScene } from "./GlobeScene";
+import { SHOW_GLOBES } from "./globeVisibility";
 import { LandingHeroSection } from "./LandingHeroSection";
 import {
   ContactCtaSection,
@@ -19,7 +21,7 @@ export function Experience() {
 
   return (
     <main id="scroll-story" className="relative min-h-screen overflow-x-hidden bg-[#0c1018]/45 text-white">
-      <GlobeScene />
+      {SHOW_GLOBES ? <GlobeScene /> : null}
       <CustomCursor />
       <Navbar />
       <LandingHeroSection />
