@@ -10,6 +10,8 @@ import { ReusableCtas } from "./collections/ReusableCtas.ts";
 import { Users } from "./collections/Users.ts";
 
 const SITE_URL = process.env.NEXT_PUBLIC_SERVER_URL || "http://localhost:3000";
+const databaseUri =
+  process.env.DATABASE_URI || (process.env.VERCEL ? "file:/tmp/payload.db" : "file:./payload.db");
 
 const generateTitle: GenerateTitle = ({ doc }) =>
   doc?.title ? `${doc.title} | GoBeyond` : "GoBeyond";
@@ -29,7 +31,7 @@ export default buildConfig({
   globals: [],
   db: sqliteAdapter({
     client: {
-      url: process.env.DATABASE_URI || "file:./payload.db",
+      url: databaseUri,
     },
   }),
   secret: process.env.PAYLOAD_SECRET || "gobe-local-payload-secret-change-before-production",
