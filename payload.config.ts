@@ -2,6 +2,8 @@ import { sqliteAdapter } from "@payloadcms/db-sqlite";
 import { lexicalEditor } from "@payloadcms/richtext-lexical";
 import { seoPlugin } from "@payloadcms/plugin-seo";
 import type { GenerateTitle, GenerateDescription } from "@payloadcms/plugin-seo/types";
+import { tmpdir } from "node:os";
+import { join } from "node:path";
 import { buildConfig } from "payload";
 import sharp from "sharp";
 import { Media } from "./collections/Media.ts";
@@ -10,8 +12,9 @@ import { ReusableCtas } from "./collections/ReusableCtas.ts";
 import { Users } from "./collections/Users.ts";
 
 const SITE_URL = process.env.NEXT_PUBLIC_SERVER_URL || "http://localhost:3000";
+const fallbackDatabaseUri = `file:${join(tmpdir(), "payload.db").replace(/\\/g, "/")}`;
 const databaseUri =
-  process.env.DATABASE_URI || (process.env.VERCEL ? "file:/tmp/payload.db" : "file:./payload.db");
+  process.env.DATABASE_URI || fallbackDatabaseUri;
 
 const generateTitle: GenerateTitle = ({ doc }) =>
   doc?.title ? `${doc.title} | GoBeyond` : "GoBeyond";
